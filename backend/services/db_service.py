@@ -1343,5 +1343,120 @@ class DBService:
             cursor.execute("UPDATE users SET created_at = ? WHERE id = ?", (updated_at, user_id))
             self.sqlite_conn.commit()
 
+    def save_goal_plan(self, user_id: str, goal_data: dict):
+        created_at = datetime.utcnow().isoformat()
+        goal_id = str(uuid.uuid4())
+        doc = {
+            "_id": ObjectId(goal_id) if ObjectId.is_valid(goal_id) else ObjectId(),
+            "goal_id": goal_id,
+            "user_id": user_id,
+            "goal_data": goal_data,
+            "created_at": created_at
+        }
+        if self.use_mongo:
+            self.db.financial_goals.insert_one(doc)
+            doc["id"] = str(doc.pop("_id"))
+            return doc
+        else:
+            cursor = self.sqlite_conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS financial_goals (
+                    id TEXT PRIMARY KEY, user_id TEXT, goal_data TEXT, created_at TEXT
+                )
+            """)
+            cursor.execute(
+                "INSERT INTO financial_goals (id, user_id, goal_data, created_at) VALUES (?, ?, ?, ?)",
+                (goal_id, user_id, self._to_json(goal_data), created_at)
+            )
+            self.sqlite_conn.commit()
+            return {"id": goal_id, "user_id": user_id, "goal_data": goal_data, "created_at": created_at}
+
+    def save_retirement_plan(self, user_id: str, retirement_data: dict):
+        created_at = datetime.utcnow().isoformat()
+        plan_id = str(uuid.uuid4())
+        doc = {
+            "_id": ObjectId(plan_id) if ObjectId.is_valid(plan_id) else ObjectId(),
+            "plan_id": plan_id,
+            "user_id": user_id,
+            "retirement_data": retirement_data,
+            "created_at": created_at
+        }
+        if self.use_mongo:
+            self.db.retirement_plans.insert_one(doc)
+            doc["id"] = str(doc.pop("_id"))
+            return doc
+        else:
+            cursor = self.sqlite_conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS retirement_plans (
+                    id TEXT PRIMARY KEY, user_id TEXT, retirement_data TEXT, created_at TEXT
+                )
+            """)
+            cursor.execute(
+                "INSERT INTO retirement_plans (id, user_id, retirement_data, created_at) VALUES (?, ?, ?, ?)",
+                (plan_id, user_id, self._to_json(retirement_data), created_at)
+            )
+            self.sqlite_conn.commit()
+            return {"id": plan_id, "user_id": user_id, "retirement_data": retirement_data, "created_at": created_at}
+
+    def save_debt_plan(self, user_id: str, debt_data: dict):
+        created_at = datetime.utcnow().isoformat()
+        plan_id = str(uuid.uuid4())
+        doc = {
+            "_id": ObjectId(plan_id) if ObjectId.is_valid(plan_id) else ObjectId(),
+            "plan_id": plan_id,
+            "user_id": user_id,
+            "debt_data": debt_data,
+            "created_at": created_at
+        }
+        if self.use_mongo:
+            self.db.debt_plans.insert_one(doc)
+            doc["id"] = str(doc.pop("_id"))
+            return doc
+        else:
+            cursor = self.sqlite_conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS debt_plans (
+                    id TEXT PRIMARY KEY, user_id TEXT, debt_data TEXT, created_at TEXT
+                )
+            """)
+            cursor.execute(
+                "INSERT INTO debt_plans (id, user_id, debt_data, created_at)",
+                (plan_id, user_id, self._to_json(debt_data), created_at)
+            )
+            self.sqlite_conn.commit()
+            return {"id": plan_id, "user_id": user_id, "debt_data": debt_data, "created_at": created_at}
+
+    def record_activity_log(self, user_id: str, action: str, description: str = None, metadata: dict = None):
+        created_at = datetime.utcnow().isoformat()
+        log_id = str(uuid.uuid4())
+        doc = {
+            "_id": ObjectId(log_id) if ObjectId.is_valid(log_id) else ObjectId(),
+            "log_id": log_id,
+            "user_id": user_id,
+            "action": action,
+            "description": description or "",
+            "metadata": metadata or {},
+            "created_at": created_at
+        }
+        if self.use_mongo:
+            self.db.activity_logs.insert_one(doc)
+            doc["id"] = str(doc.pop("_id"))
+            return doc
+        else:
+            cursor = self.sqlite_conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS activity_logs (
+                    id TEXT PRIMARY KEY, user_id TEXT, action TEXT, description TEXT, metadata TEXT, created_at TEXT
+                )
+            """)
+            cursor.execute(
+                "INSERT INTO activity_logs (id, user_id, action, description, metadata, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+                (log_id, user_id, action, description or "", self._to_json(metadata or {}), created_at)
+            )
+            self.sqlite_conn.commit()
+            return {"id": log_id, "user_id": user_id, "action": action, "description": description, "metadata": metadata, "created_at": created_at}
+
 # Singleton Database Service instance
 db_service = DBService()
+

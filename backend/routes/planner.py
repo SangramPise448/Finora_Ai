@@ -51,19 +51,24 @@ class AnomalyRequest(BaseModel):
     z_threshold: float = 2.5
 
 
+from backend.services.db_service import db_service
+
+
 @router.post("/goal")
-def goal_tracker(req: GoalRequest, _: dict = Depends(get_current_user)):
+def goal_tracker(req: GoalRequest, current_user: dict = Depends(get_current_user)):
     res = calculate_goal_progress(
         goal_amount=req.goal_amount,
         monthly_savings=req.monthly_savings,
         current_saved=req.current_saved,
         annual_return_pct=req.annual_return_pct
     )
+    db_service.save_goal_plan(current_user["id"], {**req.model_dump(), **res})
+    db_service.record_activity_log(current_user["id"], "calculate_goal", "Goal progress calculated", req.model_dump())
     return api_response(success=True, message="Goal progress calculated", data=res, **res)
 
 
 @router.post("/retirement")
-def retirement_planner(req: RetirementRequest, _: dict = Depends(get_current_user)):
+def retirement_planner(req: RetirementRequest, current_user: dict = Depends(get_current_user)):
     res = calculate_retirement_plan(
         current_age=req.current_age,
         retirement_age=req.retirement_age,
@@ -74,19 +79,24 @@ def retirement_planner(req: RetirementRequest, _: dict = Depends(get_current_use
         annual_return_pct=req.annual_return_pct,
         life_expectancy=req.life_expectancy
     )
+    db_service.save_retirement_plan(current_user["id"], {**req.model_dump(), **res})
+    db_service.record_activity_log(current_user["id"], "calculate_retirement", "Retirement plan generated", req.model_dump())
     return api_response(success=True, message="Retirement plan generated", data=res, **res)
 
 
 @router.post("/debt")
-def debt_optimizer(req: DebtRequest, _: dict = Depends(get_current_user)):
+def debt_optimizer(req: DebtRequest, current_user: dict = Depends(get_current_user)):
     res = optimize_debt_repayment(
         debts=[d.model_dump() for d in req.debts],
         extra_monthly_payment=req.extra_monthly_payment
     )
+    db_service.save_debt_plan(current_user["id"], {**req.model_dump(), **res})
+    db_service.record_activity_log(current_user["id"], "optimize_debt", "Debt optimization plan generated", req.model_dump())
     return api_response(success=True, message="Debt optimization plan generated", data=res, **res)
 
 
 @router.post("/anomalies")
-def anomaly_detection(req: AnomalyRequest, _: dict = Depends(get_current_user)):
+def anomaly_detection(req: AnomalyRequest, current_user: dict = Depends(get_current_user)):
     res = detect_anomalies(req.transactions, req.z_threshold)
+    db_service.record_activity_log(current_user["id"], "detect_anomalies", "Anomaly detection executed", {"count": len(req.transactions)})
     return api_response(success=True, message="Anomaly analysis completed", data=res, **res)

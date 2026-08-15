@@ -73,6 +73,12 @@ def predict_savings(profile: ProfileInputSchema, current_user: dict = Depends(ge
         user_id=current_user["id"],
         profile_data=input_dict
     )
+    db_service.record_activity_log(
+        user_id=current_user["id"],
+        action="predict_savings",
+        description="ML savings prediction generated",
+        metadata={"prediction_id": pred_id, "predicted_savings": pred_res.get("predicted_savings")}
+    )
 
     # Smart notifications
     if pred_res["budget_utilization"] > 90:
