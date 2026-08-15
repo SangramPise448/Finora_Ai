@@ -1,0 +1,240 @@
+/* ═══════════════════════════════════════════════════
+   Finora AI — Design System Variables
+   Central source of truth for all adaptive color tokens,
+   spacing, typography, charts, tables, and themes.
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  /* ─── Core Palette (Dark Mode) ─── */
+  --bg-primary: #030712;
+  --bg-secondary: #0b0f24;
+  --bg-tertiary: #131938;
+
+  /* ─── Surface / Cards ─── */
+  --surface-glass: rgba(255, 255, 255, 0.09);
+  --surface-glass-hover: rgba(255, 255, 255, 0.14);
+  --surface-glass-strong: rgba(255, 255, 255, 0.18);
+  --surface-elevated: rgba(11, 15, 36, 0.85);
+  --bg-panel-glass: rgba(3, 7, 18, 0.88);
+  --bg-input-glass: rgba(3, 7, 18, 0.65);
+  --bg-input-focus-glass: rgba(3, 7, 18, 0.85);
+
+  /* ─── Borders ─── */
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-default: rgba(255, 255, 255, 0.18);
+  --border-hover: rgba(139, 92, 246, 0.45);
+  --border-active: rgba(139, 92, 246, 0.65);
+
+  /* ─── Brand Colors ─── */
+  --primary: #7C3AED;
+  --primary-light: #a78bfa;
+  --primary-dark: #5b21b6;
+  --primary-glow: rgba(124, 58, 237, 0.45);
+  --primary-subtle: rgba(124, 58, 237, 0.15);
+
+  --secondary: #4F46E5;
+  --secondary-light: #818cf8;
+  --secondary-glow: rgba(79, 70, 229, 0.35);
+  --secondary-subtle: rgba(79, 70, 229, 0.15);
+
+  --accent: #22C55E;
+  --accent-light: #4ade80;
+  --accent-glow: rgba(34, 197, 94, 0.35);
+  --accent-subtle: rgba(34, 197, 94, 0.15);
+
+  --blue-glow: #38BDF8;
+  --blue-glow-light: #7dd3fc;
+  --blue-glow-subtle: rgba(56, 189, 248, 0.15);
+
+  --danger: #EF4444;
+  --danger-light: #f87171;
+  --danger-glow: rgba(239, 68, 68, 0.35);
+  --danger-subtle: rgba(239, 68, 68, 0.15);
+
+  --warning: #f59e0b;
+  --warning-subtle: rgba(245, 158, 11, 0.15);
+
+  /* ─── Standardized Financial Color Tokens (Dark) ─── */
+  --fin-income: #10B981;
+  --fin-expense: #EF4444;
+  --fin-savings: #8B5CF6;
+  --fin-investment: #6366F1;
+  --fin-balance: #38BDF8;
+  --fin-health: #06B6D4;
+  --fin-risk-low: #10B981;
+  --fin-risk-mod: #F59E0B;
+  --fin-risk-high: #EF4444;
+
+  /* ─── Table Tokens (Dark) ─── */
+  --table-header-bg: rgba(255, 255, 255, 0.05);
+  --table-row-hover: rgba(255, 255, 255, 0.07);
+  --table-row-alt: rgba(255, 255, 255, 0.02);
+
+  /* ─── Chart Tokens (Dark) ─── */
+  --chart-grid: rgba(255, 255, 255, 0.1);
+  --chart-text: #94A3B8;
+  --chart-tooltip-bg: #0B0F24;
+  --chart-tooltip-border: rgba(139, 92, 246, 0.4);
+  --chart-tooltip-text: #FFFFFF;
+
+  /* ─── Text ─── */
+  --text-primary: #FFFFFF;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --text-dim: #64748B;
+
+  /* ─── Gradients ─── */
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  --gradient-hero: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary-light) 50%, var(--blue-glow) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #10b981 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+  --gradient-card-border: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow), var(--blue-glow-subtle));
+  --gradient-mesh: radial-gradient(circle at 15% 15%, rgba(124, 58, 237, 0.28) 0%, transparent 45%),
+                   radial-gradient(circle at 85% 25%, rgba(56, 189, 248, 0.2) 0%, transparent 45%),
+                   radial-gradient(circle at 50% 75%, rgba(79, 70, 229, 0.22) 0%, transparent 50%),
+                   radial-gradient(circle at 80% 85%, rgba(34, 197, 94, 0.12) 0%, transparent 45%);
+
+  /* ─── Shadows ─── */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 45px -10px rgba(0, 0, 0, 0.6);
+  --shadow-glow-primary: 0 0 25px var(--primary-glow);
+  --shadow-glow-accent: 0 0 25px var(--accent-glow);
+  --shadow-glow-blue: 0 0 25px rgba(56, 189, 248, 0.35);
+
+  /* ─── Blur ─── */
+  --blur-sm: 8px;
+  --blur-md: 16px;
+  --blur-lg: 24px;
+  --blur-xl: 40px;
+
+  /* ─── Transitions ─── */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 200ms var(--ease-smooth);
+  --transition-normal: 350ms var(--ease-smooth);
+  --transition-slow: 500ms var(--ease-smooth);
+
+  /* ─── Border Radius ─── */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.85rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ─── Z-Index Scale ─── */
+  --z-base: 1;
+  --z-overlay: 10;
+  --z-modal: 50;
+  --z-toast: 100;
+}
+
+/* ─── Light Mode Theme Tokens ─── */
+.light, [data-theme="light"] {
+  /* ─── Core Palette (Vibrant Light Mode) ─── */
+  --bg-primary: #F0F4FE;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #E0E7FF;
+
+  /* ─── Surface / Cards ─── */
+  --surface-glass: rgba(255, 255, 255, 0.85);
+  --surface-glass-hover: rgba(255, 255, 255, 0.95);
+  --surface-glass-strong: rgba(255, 255, 255, 0.98);
+  --surface-elevated: #FFFFFF;
+  --bg-panel-glass: rgba(255, 255, 255, 0.92);
+  --bg-input-glass: rgba(241, 245, 249, 0.9);
+  --bg-input-focus-glass: #FFFFFF;
+
+  /* ─── Borders ─── */
+  --border-subtle: rgba(99, 102, 241, 0.16);
+  --border-default: rgba(99, 102, 241, 0.28);
+  --border-hover: rgba(109, 40, 217, 0.55);
+  --border-active: rgba(109, 40, 217, 0.75);
+
+  /* ─── Brand Colors (High Contrast Light Mode) ─── */
+  --primary: #6D28D9;
+  --primary-light: #7C3AED;
+  --primary-dark: #4C1D95;
+  --primary-glow: rgba(109, 40, 217, 0.25);
+  --primary-subtle: rgba(109, 40, 217, 0.1);
+
+  --secondary: #4338CA;
+  --secondary-light: #4F46E5;
+  --secondary-glow: rgba(67, 56, 202, 0.2);
+  --secondary-subtle: rgba(67, 56, 202, 0.1);
+
+  --accent: #15803D;
+  --accent-light: #16A34A;
+  --accent-glow: rgba(21, 128, 61, 0.2);
+  --accent-subtle: rgba(21, 128, 61, 0.1);
+
+  --blue-glow: #0284C7;
+  --blue-glow-light: #0369A1;
+  --blue-glow-subtle: rgba(2, 132, 199, 0.12);
+
+  --danger: #B91C1C;
+  --danger-light: #DC2626;
+  --danger-glow: rgba(185, 28, 28, 0.2);
+  --danger-subtle: rgba(185, 28, 28, 0.1);
+
+  --warning: #B45309;
+  --warning-subtle: rgba(180, 83, 9, 0.1);
+
+  /* ─── Standardized Financial Color Tokens (Light) ─── */
+  --fin-income: #059669;
+  --fin-expense: #DC2626;
+  --fin-savings: #7C3AED;
+  --fin-investment: #4F46E5;
+  --fin-balance: #0284C7;
+  --fin-health: #0891B2;
+  --fin-risk-low: #059669;
+  --fin-risk-mod: #D97706;
+  --fin-risk-high: #DC2626;
+
+  /* ─── Table Tokens (Light) ─── */
+  --table-header-bg: rgba(224, 231, 255, 0.85);
+  --table-row-hover: rgba(238, 242, 255, 0.95);
+  --table-row-alt: rgba(248, 250, 252, 0.6);
+
+  /* ─── Chart Tokens (Light) ─── */
+  --chart-grid: rgba(15, 23, 42, 0.1);
+  --chart-text: #334155;
+  --chart-tooltip-bg: #FFFFFF;
+  --chart-tooltip-border: rgba(99, 102, 241, 0.3);
+  --chart-tooltip-text: #0F172A;
+
+  /* ─── Text ─── */
+  --text-primary: #0F172A;
+  --text-secondary: #1E293B;
+  --text-muted: #475569;
+  --text-dim: #64748B;
+
+  /* ─── Gradients (Rich Light Mesh) ─── */
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  --gradient-hero: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--blue-glow) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #047857 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%);
+  --gradient-card-border: linear-gradient(135deg, rgba(109, 40, 217, 0.35), rgba(67, 56, 202, 0.25), rgba(2, 132, 199, 0.2));
+  --gradient-mesh: radial-gradient(circle at 15% 15%, rgba(124, 58, 237, 0.12) 0%, transparent 50%),
+                   radial-gradient(circle at 85% 20%, rgba(56, 189, 248, 0.14) 0%, transparent 50%),
+                   radial-gradient(circle at 50% 65%, rgba(79, 70, 229, 0.1) 0%, transparent 55%),
+                   radial-gradient(circle at 85% 85%, rgba(34, 197, 94, 0.08) 0%, transparent 45%);
+
+  /* ─── Shadows ─── */
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.09);
+  --shadow-lg: 0 20px 40px -12px rgba(99, 102, 241, 0.14);
+  --shadow-glow-primary: 0 0 25px rgba(109, 40, 217, 0.2);
+  --shadow-glow-accent: 0 0 25px rgba(21, 128, 61, 0.15);
+  --shadow-glow-blue: 0 0 25px rgba(2, 132, 199, 0.15);
+}
+
+/* ─── Print / PDF High Contrast Compatibility ─── */
+@media print {
+  body, .glass-card, .glass-panel {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border-color: #CCCCCC !important;
+  }
+}

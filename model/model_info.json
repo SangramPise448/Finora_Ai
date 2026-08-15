@@ -1,0 +1,13 @@
+{
+  "algorithm": "RandomForestRegressor",
+  "n_estimators": 30,
+  "n_features": 87,
+  "target_variable": "Savings",
+  "r2_score": 0.9945729580414691,
+  "mae": 110682.0699597548,
+  "mse": 1184375886903.3767,
+  "rmse": 1088290.350459553,
+  "cv_r2_mean": 0.9962413081557674,
+  "cv_r2_std": 0.006135621699933481,
+  "timestamp": "2026-07-31"
+}

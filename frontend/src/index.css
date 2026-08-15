@@ -1,0 +1,43 @@
+/* ═══════════════════════════════════════════════════
+   Finora AI — Main Stylesheet
+   Tailwind CSS v4 with design system modules.
+   ═══════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import './styles/variables.css';
+@import './styles/animations.css';
+@import './styles/glass.css';
+@import './styles/utilities.css';
+@import "tailwindcss";
+
+@config "../tailwind.config.js";
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    font-family: Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    background-image: var(--gradient-mesh);
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    transition: background-color 250ms ease, color 250ms ease;
+  }
+
+  .glass-card, .glass-panel, .fintech-input, .fintech-select, button {
+    transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}

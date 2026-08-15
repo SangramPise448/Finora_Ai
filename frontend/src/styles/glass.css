@@ -1,0 +1,257 @@
+/* ═══════════════════════════════════════════════════
+   Finora AI — Glassmorphism Design System
+   Premium glass effects for cards, panels, and inputs.
+   Only complex multi-property styles here; simple
+   overrides use Tailwind utility classes.
+   ═══════════════════════════════════════════════════ */
+
+/* ─── Base Glass Card ─── */
+.glass-card {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth), border-color 0.3s var(--ease-smooth);
+}
+
+.glass-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -10px var(--primary-glow), var(--shadow-lg);
+}
+
+/* ─── Interactive Glass Card (with pop-up lift) ─── */
+.glass-card-interactive {
+  background: var(--gradient-glass);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth), border-color 0.3s var(--ease-smooth);
+  cursor: pointer;
+}
+
+.glass-card-interactive:hover {
+  background: var(--surface-glass-hover);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 22px 50px -10px var(--primary-glow), var(--shadow-glow-primary);
+  transform: translateY(-8px) scale(1.015);
+}
+
+/* ─── Gradient Border Card (rotating glow border) ─── */
+.glass-gradient-border {
+  position: relative;
+  border-radius: var(--radius-lg);
+}
+
+.glass-gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  padding: 1px;
+  background: var(--gradient-card-border);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+  opacity: 0.6;
+}
+
+.glass-gradient-border:hover::before {
+  opacity: 1;
+}
+
+/* ─── Sidebar / Panel Glass ─── */
+.glass-panel {
+  background: var(--bg-panel-glass);
+  border-right: 1px solid var(--border-subtle);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+}
+
+/* ─── AI Insight Glass (special purple tint) ─── */
+.glass-ai {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08) 0%, rgba(79, 70, 229, 0.04) 100%);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-normal);
+}
+
+.glass-ai:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: var(--shadow-md), var(--shadow-glow-primary);
+}
+
+/* ─── Input Fields ─── */
+.fintech-input {
+  width: 100%;
+  background-color: var(--bg-input-glass);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  outline: none;
+  transition: all var(--transition-normal);
+}
+
+.fintech-input.pl-10,
+.fintech-input.pl-11,
+.fintech-input.pl-12,
+.fintech-input-icon {
+  padding-left: 2.75rem !important;
+}
+
+.fintech-input.pr-10,
+.fintech-input.pr-11,
+.fintech-input.pr-12 {
+  padding-right: 2.75rem !important;
+}
+
+.fintech-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-subtle), var(--shadow-glow-primary);
+  background-color: var(--bg-input-focus-glass);
+}
+
+.fintech-input::placeholder {
+  color: var(--text-dim);
+}
+
+.fintech-select {
+  width: 100%;
+  background-color: var(--bg-input-glass);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  outline: none;
+  transition: all var(--transition-normal);
+}
+
+.fintech-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-subtle), var(--shadow-glow-primary);
+  background-color: var(--bg-input-focus-glass);
+}
+
+/* ─── Buttons ─── */
+.fintech-button-primary {
+  background: var(--gradient-primary);
+  color: var(--text-primary);
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 20px var(--primary-glow);
+  border: none;
+  cursor: pointer;
+}
+
+.fintech-button-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.fintech-button-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--primary-glow), 0 0 40px rgba(124, 58, 237, 0.15);
+  filter: brightness(1.1);
+}
+
+.fintech-button-primary:hover::before {
+  opacity: 1;
+}
+
+.fintech-button-primary:active {
+  transform: translateY(1px);
+}
+
+.fintech-button-secondary {
+  background: var(--surface-glass);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.75rem;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.fintech-button-secondary:hover {
+  background: var(--surface-glass-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.fintech-button-secondary:active {
+  transform: translateY(1px);
+}
+
+/* ─── Glow Button (CTA) ─── */
+.btn-glow {
+  position: relative;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: var(--gradient-primary);
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  z-index: -1;
+}
+
+.btn-glow:hover::after {
+  opacity: 0.6;
+}
+
+/* ─── Ambient Glow Blobs ─── */
+.glow-blob {
+  position: absolute;
+  border-radius: var(--radius-full);
+  filter: blur(130px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Notification Toast Container ─── */
+.toast-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.toast-container > * {
+  pointer-events: auto;
+}
+
+/* ─── Input Padding Utility ─── */
+.pl-icon {
+  padding-left: 2.75rem !important;
+}

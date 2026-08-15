@@ -1,0 +1,205 @@
+/* ═══════════════════════════════════════════════════
+   Finora AI — Utility Styles
+   Custom scrollbars, skeleton loaders, data streams,
+   and other complex visual utilities.
+   ═══════════════════════════════════════════════════ */
+
+/* ─── Custom Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(124, 58, 237, 0.2);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(124, 58, 237, 0.4);
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ─── Skeleton Loader ─── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-text {
+  height: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  width: 60%;
+  margin-bottom: 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-circle {
+  border-radius: var(--radius-full);
+}
+
+.skeleton-card {
+  height: 120px;
+  border-radius: var(--radius-lg);
+}
+
+/* ─── Neural Network / AI Background Lines ─── */
+.neural-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* ─── AI Data Stream Dots ─── */
+.data-stream-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.data-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--primary-light);
+  border-radius: var(--radius-full);
+  animation: data-stream var(--duration, 4s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  left: var(--left, 50%);
+  opacity: 0;
+}
+
+/* ─── Animated Gradient Background ─── */
+.mesh-gradient-bg {
+  background: var(--bg-primary);
+  background-image: var(--gradient-mesh);
+  background-attachment: fixed;
+}
+
+/* ─── Animated Mesh for Hero ─── */
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-mesh::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  left: -100px;
+  background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+  animation: blob-drift 20s infinite alternate ease-in-out;
+}
+
+.hero-mesh::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  bottom: -150px;
+  right: -100px;
+  background: radial-gradient(circle, var(--blue-glow-subtle) 0%, transparent 70%);
+  animation: blob-drift 15s infinite alternate-reverse ease-in-out;
+}
+
+/* ─── Floating Geometric Shapes ─── */
+.floating-shape {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.06;
+  z-index: 0;
+}
+
+.floating-shape.circle {
+  border-radius: var(--radius-full);
+  border: 1px solid var(--primary-light);
+}
+
+.floating-shape.square {
+  border: 1px solid var(--blue-glow);
+  transform: rotate(45deg);
+}
+
+.floating-shape.triangle {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 35px solid rgba(124, 58, 237, 0.2);
+}
+
+/* ─── Progress Bar ─── */
+.progress-bar {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--gradient-primary);
+  transition: width 1s var(--ease-smooth);
+  position: relative;
+}
+
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: progress-shimmer 2s infinite;
+}
+
+/* ─── Selection highlight ─── */
+::selection {
+  background-color: rgba(124, 58, 237, 0.4);
+  color: white;
+}
+
+/* ─── Focus Visible ─── */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
