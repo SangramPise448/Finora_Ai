@@ -1,7 +1,21 @@
 import axios, { AxiosError } from 'axios';
 import type { InternalAxiosRequestConfig } from 'axios';
 
-export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const getDynamicApiUrl = (): string => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'http://localhost:8000';
+    }
+    return window.location.origin;
+  }
+  return 'http://localhost:8000';
+};
+
+export const API_URL = getDynamicApiUrl();
 
 export const getStoredToken = (): string | null => {
   return localStorage.getItem('finora_token') || sessionStorage.getItem('finora_token');

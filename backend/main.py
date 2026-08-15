@@ -106,4 +106,25 @@ def health_check():
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     }
 
+# Mount Frontend Dist & SPA Fallback Handler for Production Deployments
+import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+frontend_dist = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+if os.path.exists(frontend_dist):
+    assets_dir = os.path.join(frontend_dist, "assets")
+    if os.path.exists(assets_dir):
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+@app.middleware("http")
+async def spa_fallback_middleware(request: Request, call_next):
+    response = await call_next(request)
+    if response.status_code == 404:
+        path = request.url.path
+        frontend_index = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist", "index.html")
+        if os.path.exists(frontend_index) and not path.startswith(("/auth", "/finance", "/planner", "/assistant", "/reports", "/search", "/docs", "/openapi.json", "/health", "/assets")):
+            return FileResponse(frontend_index)
+    return response
+
 logger.info(f"Finora AI backend initialized | {settings.PROJECT_NAME} v{settings.VERSION}")
