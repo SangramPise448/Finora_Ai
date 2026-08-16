@@ -48,7 +48,7 @@ export default function AdvisorPage() {
   const [activeSessionTitle, setActiveSessionTitle] = useState<string>('New Financial Chat');
   const [sessionSearch, setSessionSearch] = useState('');
   const [showTrash, setShowTrash] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
 
   // Chat State
   const [messages, setMessages] = useState<Message[]>([]);
@@ -378,9 +378,9 @@ export default function AdvisorPage() {
       <div className="h-[calc(100vh-4rem)] flex overflow-hidden font-sans">
         
         {/* ChatGPT-Style Sessions Sidebar */}
-        <aside className={`border-r border-[var(--border-subtle)] bg-[var(--bg-secondary)]/90 backdrop-blur-xl flex flex-col transition-all duration-300 ${
-          sidebarCollapsed ? 'w-14' : 'w-64 sm:w-72'
-        } flex-none z-20`}>
+        <aside className={`border-r border-[var(--border-subtle)] bg-[var(--bg-secondary)]/95 backdrop-blur-xl flex flex-col transition-all duration-300 ${
+          sidebarCollapsed ? 'w-12 sm:w-14' : 'w-64 sm:w-72 absolute md:relative inset-y-0 left-0 z-30 shadow-2xl md:shadow-none h-full'
+        } flex-none`}>
           
           {/* Sidebar Top Controls */}
           <div className="p-3 border-b border-[var(--border-subtle)] space-y-2 flex-none">

@@ -557,11 +557,11 @@ export default function DashboardPage() {
 
                   {/* Prediction History Table */}
                   <GlassCard className="overflow-hidden" delay={0.8} animate={true}>
-                    <div className="p-5 border-b border-[var(--border-subtle)] flex items-center justify-between">
+                    <div className="p-5 border-b border-[var(--border-subtle)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                       <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider font-display flex items-center gap-1.5">
                         <Sparkles className="w-4 h-4 text-[var(--primary-light)]" /> Prediction History
                       </h3>
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <button 
                           onClick={fetchHistory}
                           className="fintech-button-secondary py-1 px-2.5 text-[10px] flex items-center gap-1"
@@ -574,32 +574,32 @@ export default function DashboardPage() {
                         >
                           <Trash2 className="w-3 h-3" /> Clear History
                         </button>
-                        <span className="text-[10px] text-[var(--text-dim)] font-bold uppercase tracking-wider ml-2">{history.length} Runs</span>
+                        <span className="text-[10px] text-[var(--text-dim)] font-bold uppercase tracking-wider ml-1">{history.length} Runs</span>
                       </div>
                     </div>
                     <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs border-collapse">
+                      <table className="w-full text-left text-xs border-collapse min-w-[550px]">
                         <thead>
                           <tr className="border-b border-[var(--border-subtle)] bg-[var(--surface-glass)] text-[var(--text-muted)] font-bold">
-                            <th className="p-4 uppercase tracking-wider text-[10px]">Date</th>
-                            <th className="p-4 uppercase tracking-wider text-[10px]">Income</th>
-                            <th className="p-4 uppercase tracking-wider text-[10px]">Expenses</th>
-                            <th className="p-4 uppercase tracking-wider text-[10px]">Savings</th>
-                            <th className="p-4 uppercase tracking-wider text-[10px]">Health</th>
-                            <th className="p-4 uppercase tracking-wider text-[10px]">Actions</th>
+                            <th className="p-4 uppercase tracking-wider text-[10px] whitespace-nowrap">Date</th>
+                            <th className="p-4 uppercase tracking-wider text-[10px] whitespace-nowrap">Income</th>
+                            <th className="p-4 uppercase tracking-wider text-[10px] whitespace-nowrap">Expenses</th>
+                            <th className="p-4 uppercase tracking-wider text-[10px] whitespace-nowrap">Savings</th>
+                            <th className="p-4 uppercase tracking-wider text-[10px] whitespace-nowrap">Health</th>
+                            <th className="p-4 uppercase tracking-wider text-[10px] whitespace-nowrap">Actions</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-[var(--border-subtle)]">
                           {history.slice(0, 5).map((item, idx) => (
                             <tr key={idx} className="hover:bg-[var(--surface-glass)] transition-colors">
-                              <td className="p-4 text-[var(--text-secondary)] font-medium">
+                              <td className="p-4 text-[var(--text-secondary)] font-medium whitespace-nowrap">
                                 {new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
                               </td>
-                              <td className="p-4 text-[var(--text-primary)] font-bold font-mono">₹{item.input_data.Income.toLocaleString('en-IN')}</td>
-                              <td className="p-4 text-[var(--text-secondary)] font-mono">₹{item.input_data.Expense.toLocaleString('en-IN')}</td>
-                              <td className="p-4 text-[var(--accent)] font-bold font-mono">₹{item.predictions.predicted_savings.toLocaleString('en-IN')}</td>
-                              <td className="p-4 font-bold text-[var(--primary-light)]">{item.predictions.financial_health_score}%</td>
-                              <td className="p-4">
+                              <td className="p-4 text-[var(--text-primary)] font-bold font-mono whitespace-nowrap">₹{item.input_data?.Income?.toLocaleString('en-IN') || 0}</td>
+                              <td className="p-4 text-[var(--text-secondary)] font-mono whitespace-nowrap">₹{item.input_data?.Expense?.toLocaleString('en-IN') || 0}</td>
+                              <td className="p-4 text-[var(--accent)] font-bold font-mono whitespace-nowrap">₹{item.predictions?.predicted_savings?.toLocaleString('en-IN') || 0}</td>
+                              <td className="p-4 font-bold text-[var(--primary-light)] whitespace-nowrap">{item.predictions?.financial_health_score || 0}%</td>
+                              <td className="p-4 whitespace-nowrap">
                                 <button
                                   onClick={() => deleteSingleHistory(item.id)}
                                   className="p-1.5 text-rose-400 hover:bg-rose-500/20 rounded-lg transition-all"

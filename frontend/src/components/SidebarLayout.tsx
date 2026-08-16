@@ -340,11 +340,11 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 min-h-screen relative">
         {/* Top Header Navbar */}
-        <header className="sticky top-0 z-30 flex-none h-16 border-b border-[var(--border-subtle)] backdrop-blur-xl flex items-center px-6 gap-4 justify-between bg-[var(--bg-secondary)]/80">
-          <div className="flex items-center gap-3">
+        <header className="sticky top-0 z-30 flex-none h-16 border-b border-[var(--border-subtle)] backdrop-blur-xl flex items-center px-3 sm:px-6 gap-2 sm:gap-4 justify-between bg-[var(--bg-secondary)]/90">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <button 
               onClick={() => setMobileOpen(true)} 
-              className="md:hidden p-2 rounded-lg text-[var(--text-muted)] hover:text-white hover:bg-[var(--surface-glass)] transition-colors"
+              className="md:hidden p-1.5 rounded-lg text-[var(--text-muted)] hover:text-white hover:bg-[var(--surface-glass)] transition-colors flex-none"
             >
               <Menu className="w-5 h-5" />
             </button>
@@ -352,17 +352,17 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
             {collapsed && (
               <button 
                 onClick={() => setCollapsed(false)} 
-                className="hidden md:flex p-2 rounded-lg text-[var(--text-muted)] hover:text-white hover:bg-[var(--surface-glass)] transition-colors"
+                className="hidden md:flex p-2 rounded-lg text-[var(--text-muted)] hover:text-white hover:bg-[var(--surface-glass)] transition-colors flex-none"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
             )}
 
-            <div>
-              <p className="text-sm font-bold text-[var(--text-primary)] tracking-wide font-display">
+            <div className="min-w-0 flex-1">
+              <p className="text-xs sm:text-sm font-bold text-[var(--text-primary)] tracking-wide font-display truncate">
                 {getCurrentTitle()}
               </p>
-              <p className="text-[9px] text-[var(--text-dim)] font-medium flex items-center gap-1">
+              <p className="text-[9px] text-[var(--text-dim)] font-medium hidden sm:flex items-center gap-1">
                 <Sparkles className="w-3 h-3 text-[var(--primary-light)]" />
                 Powered by Finora AI Engine
               </p>

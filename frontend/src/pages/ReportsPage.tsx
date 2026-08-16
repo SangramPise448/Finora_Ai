@@ -9,7 +9,7 @@ import {
 import { GlassCard } from '../components/ui/GlassCard';
 import { PageSkeleton } from '../components/ui/SkeletonLoader';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+import { apiClient } from '../utils/apiClient';
 
 export default function ReportsPage() {
   const { token } = useAuth();
@@ -17,12 +17,20 @@ export default function ReportsPage() {
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState<string | null>(null);
 
+  const fetchPredictions = async () => {
+    try {
+      const res = await apiClient.get('/finance/history');
+      const dataList = Array.isArray(res.data) ? res.data : (Array.isArray(res.data?.data) ? res.data.data : []);
+      setPredictions(dataList);
+    } catch (err) {
+      console.error('Failed to load predictions in reports:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetch(`${API}/finance/history`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => r.json())
-      .then(d => { if (Array.isArray(d)) setPredictions(d); })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    fetchPredictions();
   }, [token]);
 
   const downloadReport = async (predId: string | null, format: 'pdf' | 'excel' | 'csv') => {
@@ -30,12 +38,9 @@ export default function ReportsPage() {
     setGenerating(key);
     try {
       const activeFormat = format === 'csv' ? 'excel' : format;
-      const url = predId ? `${API}/reports/${activeFormat}/${predId}` : `${API}/reports/${activeFormat}`;
-      const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!res.ok) throw new Error('Failed to generate report');
-      const blob = await res.blob();
+      const url = predId ? `/reports/${activeFormat}/${predId}` : `/reports/${activeFormat}`;
+      const response = await apiClient.get(url, { responseType: 'blob' });
+      const blob = new Blob([response.data]);
       const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = blobUrl;
@@ -44,7 +49,7 @@ export default function ReportsPage() {
       a.download = `finora-report-${idPrefix}.${ext}`;
       a.click();
       URL.revokeObjectURL(blobUrl);
-    } catch (e) {
+    } catch (e: any) {
       alert('Could not generate report. Please try again.');
     } finally {
       setGenerating(null);
