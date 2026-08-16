@@ -326,6 +326,14 @@ def send_chat_message(msg_in: ChatMessageSchema, current_user: dict = Depends(ge
         message=ai_reply,
         conversation_id=session_id
     )
+
+    # Record AI interaction activity log in MongoDB Atlas
+    db_service.record_activity_log(
+        user_id=user_id,
+        action="ai_chat",
+        description=f"Asked AI Assistant: {user_message[:60]}...",
+        metadata={"session_id": session_id, "prompt": user_message[:100]}
+    )
     
     suggested = [
         "How can I optimize my monthly budget?",
@@ -347,6 +355,12 @@ def submit_feedback(fb_in: FeedbackSchema, current_user: dict = Depends(get_curr
         user_id=user_id,
         rating=fb_in.rating,
         feedback_text=fb_in.feedback_text
+    )
+    db_service.record_activity_log(
+        user_id=user_id,
+        action="submit_feedback",
+        description=f"Submitted {fb_in.rating} feedback for AI response",
+        metadata={"message_id": fb_in.message_id, "rating": fb_in.rating}
     )
     return {"success": True, "data": res}
 

@@ -164,6 +164,14 @@ def register(user_in: UserRegister):
 
     actual_id = created_user.get("id", user_id)
 
+    # Record registration activity log in MongoDB Atlas
+    db_service.record_activity_log(
+        user_id=actual_id,
+        action="user_register",
+        description=f"User {user_in.name} registered account",
+        metadata={"email": norm_email, "phone": norm_phone}
+    )
+
     # Create welcome notification
     db_service.create_notification(
         notif_id=str(uuid.uuid4()),
@@ -226,13 +234,19 @@ def login(credentials: UserLogin, request: Request):
     db_service.update_user_status(user["id"], "active")
     user["status"] = "active"
 
-    # Record login history in MongoDB
+    # Record login history & activity log in MongoDB Atlas
     ip_addr = request.client.host if request.client else "127.0.0.1"
     u_agent = request.headers.get("user-agent", "Unknown")
     db_service.record_login_history(
         user_id=user["id"],
         ip_address=ip_addr,
         user_agent=u_agent
+    )
+    db_service.record_activity_log(
+        user_id=user["id"],
+        action="user_login",
+        description=f"User {user.get('email')} logged in",
+        metadata={"email": norm_email, "ip_address": ip_addr}
     )
 
     access_token, refresh_token, user_data = _generate_user_tokens(user)
@@ -522,6 +536,12 @@ def get_me(current_user: dict = Depends(get_current_user)):
 @router.post("/logout")
 def logout(current_user: dict = Depends(get_current_user)):
     db_service.update_user_status(current_user["id"], "inactive")
+    db_service.record_activity_log(
+        user_id=current_user["id"],
+        action="user_logout",
+        description=f"User {current_user.get('email')} logged out",
+        metadata={"email": current_user.get("email")}
+    )
     return api_response(
         success=True,
         message="Successfully signed out of Finora AI."

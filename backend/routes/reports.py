@@ -36,6 +36,12 @@ def export_pdf_report(current_user: dict = Depends(get_current_user), prediction
         email=current_user["email"],
         prediction_data=latest_pred
     )
+    db_service.record_activity_log(
+        user_id=current_user["id"],
+        action="download_pdf_report",
+        description="Downloaded PDF financial intelligence report",
+        metadata={"prediction_id": prediction_id}
+    )
     filename = f"Finora_AI_Report_{current_user['name'].replace(' ', '_')}.pdf"
     if prediction_id:
         filename = f"Finora_AI_Report_{current_user['name'].replace(' ', '_')}_{prediction_id[:8]}.pdf"
